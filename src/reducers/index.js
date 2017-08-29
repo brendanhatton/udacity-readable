@@ -1,36 +1,29 @@
 import { combineReducers } from 'redux'
 
 import {
-    ADD_RECIPE,
+    RECEIVE_CATEGORIES,
     // REMOVE_FROM_CALENDAR
 } from '../actions'
 
-function food(state = {}, action) {
-//     switch (action.type) { //TODO
-//         case ADD_RECIPE:
-//             const { recipe } = action
+function categories(state = [], action) {
+    switch (action.type) {
+        case RECEIVE_CATEGORIES:
+            const categories = action.categories
+            return categories
+        default:
+            return state
+    }
 
-//             return {
-//                 ...state,
-//                 [recipe.label]: recipe,
-//             }
-//         default:
-//             return state
-//     }
-    return state
 }
 
 
-const initialState = {
-}
-
-
-function calendar(state = {}, action) {
-    //TODO
-    return state
-}
+// function calendar(state = {}, action) {
+//     //TODO
+//     return state
+// }
 
 export default combineReducers({
-    food,
-    calendar
+    categories,
+    // food,
+    // calendar
 })

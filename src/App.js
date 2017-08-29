@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import CategoryList from './components/CategoryList'
 
 class App extends Component {
+
+// componentDidMount = () => {
+//     this.getCategories()
+//   }
+
+//   getCategories = () => {
+//     BooksAPI.getAll().then(allBooks => {
+//       this.setState({
+//         currentlyReading: allBooks.filter((b) => b.shelf === 'currentlyReading'),
+//         wantToRead: allBooks.filter((b) => b.shelf === 'wantToRead'),
+//         read: allBooks.filter((b) => b.shelf === 'read'),
+//       })
+//     })
+//   }
+
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get test started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <CategoryList />
       </div>
     );
   }
