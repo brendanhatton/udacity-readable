@@ -17,6 +17,15 @@ function categories(state = [], action) {
     }
 }
 
+function selectedcategory(state = [], action) {
+    switch (action.type) {
+        case RECEIVE_CATEGORIES:
+            return action.categories
+        default:
+            return state
+    }
+}
+
 function posts(state = [], action) {
     switch (action.type) {
         case RECEIVE_POSTS:
@@ -26,7 +35,10 @@ function posts(state = [], action) {
                 if (item.id !== action.post.id) {
                     return item
                 } else {
-                    return action.post
+                    return {
+                        ...item,
+                        voteScore: action.post.voteScore
+                    }
                 }
             })
         case RECEIVE_COMMENTS:
@@ -49,6 +61,11 @@ function selectedPost(state = [], action) {
     switch (action.type) {
         case RECEIVE_POST:
             return action.post
+        case VOTE:
+            return {
+                ...state,
+                voteScore: action.post.voteScore
+            }
         default:
             return state
     }

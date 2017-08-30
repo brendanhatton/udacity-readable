@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchPosts, sendVote } from '../actions/index'
+import { fetchPosts } from '../actions/index'
 import PostSummary from './PostSummary'
 
 class PostList extends Component {
@@ -14,29 +14,17 @@ class PostList extends Component {
             })}
         </div>
     }
-
-    onVoteUp = (post, e) => {
-        e.preventDefault()
-        console.log("vote up")
-        this.props.vote(post, 'upVote')
-    }
-
-
-    onVoteDown = (post, e) => {
-        e.preventDefault()
-        console.log("vote down")
-        this.props.vote(post, 'downVote')
-    }
 }
 
+const sortByVote = () => (a, b) => b.voteScore - a.voteScore
+
 const mapStateToProps = (state, props) => ({
-    posts: state.posts.sort(function (a, b) { return b.voteScore - a.voteScore })
+    posts: state.posts.sort(state.sortOrder ? state.sortOrder : sortByVote)
 });
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchData: () => dispatch(fetchPosts()),
-        vote: (post, voteString) => dispatch(sendVote(post, voteString))
+        fetchData: () => dispatch(fetchPosts())
     };
 };
 
