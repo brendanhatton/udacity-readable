@@ -3,7 +3,8 @@ import { combineReducers } from 'redux'
 import {
     RECEIVE_CATEGORIES,
     RECEIVE_POSTS,
-    VOTE
+    VOTE,
+    RECEIVE_COMMENTS
 } from '../actions'
 
 function categories(state = [], action) {
@@ -25,6 +26,17 @@ function posts(state = [], action) {
                     return item
                 } else {
                     return action.post
+                }
+            })
+        case RECEIVE_COMMENTS:
+            return state.map(item => {
+                if (item.id !== action.post.id) {
+                    return item
+                } else {
+                    return {
+                        ...item,
+                        comments: action.comments
+                    }
                 }
             })
         default:

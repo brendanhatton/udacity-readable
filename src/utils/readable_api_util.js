@@ -21,3 +21,9 @@ export const vote = (post, voteString) => {
         }
     )
 }
+
+
+export const fetchComments = (post) => {
+    console.log('fetch comments from API')
+    return fetch(`http://localhost:5001/posts/${post.id}/comments`, { headers: { 'Authorization': 'my-secret' } })
+}
