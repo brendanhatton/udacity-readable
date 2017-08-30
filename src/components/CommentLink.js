@@ -8,9 +8,9 @@ class CommentLink extends Component {
     }
     render() {
         const post = this.props.post
-        return <div className="commentLink">
+        return <span className="commentLink">
             ({post.comments ? post.comments.length : 0}) Comments
-        </div>
+        </span>
     }
 }
 

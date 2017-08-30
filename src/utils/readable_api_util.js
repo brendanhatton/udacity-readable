@@ -8,6 +8,11 @@ export const fetchPosts = () => {
     return fetch('http://localhost:5001/posts', { headers: { 'Authorization': 'my-secret' } })
 }
 
+export const fetchPost = (id) => {
+    console.log('fetch post ' + id + '  from API')
+    return fetch(`http://localhost:5001/posts/${id}`, { headers: { 'Authorization': 'my-secret' } })
+}
+
 export const vote = (post, voteString) => {
     console.log('calling vote')
     return fetch(`http://localhost:5001/posts/${post.id}`,

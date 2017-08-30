@@ -3,6 +3,7 @@ import { combineReducers } from 'redux'
 import {
     RECEIVE_CATEGORIES,
     RECEIVE_POSTS,
+    RECEIVE_POST,
     VOTE,
     RECEIVE_COMMENTS
 } from '../actions'
@@ -44,7 +45,17 @@ function posts(state = [], action) {
     }
 }
 
+function selectedPost(state = [], action) {
+    switch (action.type) {
+        case RECEIVE_POST:
+            return action.post
+        default:
+            return state
+    }
+}
+
 export default combineReducers({
     categories,
     posts,
+    selectedPost
 })

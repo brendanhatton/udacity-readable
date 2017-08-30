@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchPosts, sendVote } from '../actions/index'
-import Post from './Post'
+import PostSummary from './PostSummary'
 
 class PostList extends Component {
     componentDidMount = () => {
@@ -10,7 +10,7 @@ class PostList extends Component {
     render() {
         return <div className="postList">
             {this.props.posts.map((post) => {
-                return <Post post={post} key={post.id} onVoteUp={this.onVoteUp} onVoteDown={this.onVoteDown} />
+                return <PostSummary post={post} key={post.id} onVoteUp={this.onVoteUp} onVoteDown={this.onVoteDown} />
             })}
         </div>
     }
