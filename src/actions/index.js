@@ -1,29 +1,7 @@
 import * as ReadableAPIUtil from '../utils/readable_api_util';
 
-// export const ADD_RECIPE = 'ADD_RECIPE'
-export const RECEIVE_CATEGORIES = "RECEIVE_CATEGORIES";
-// export const REMOVE_FROM_CALENDAR = 'REMOVE_FROM_CALENDAR'
-
-// export function addRecipe({day, recipe, meal}) {
-//     return {
-//         type: ADD_RECIPE,
-//         recipe,
-//         day,
-//         meal
-//     }
-// }
-
-// export function removeFromCalendar ({day, meal}) {
-//     return {
-//         type: REMOVE_FROM_CALENDAR,
-//         day,
-//         meal
-//     }
-// }
-
-
-
-
+export const RECEIVE_CATEGORIES = "RECEIVE_CATEGORIES"
+export const RECEIVE_POSTS = "RECEIVE_POSTS"
 
 export const receiveCategories = (categories) => {
     return ({
@@ -45,3 +23,23 @@ export const fetchCategories = () =>
             })
     )
 
+
+export const receivePosts = (posts) => {
+    return ({
+        type: RECEIVE_POSTS,
+        posts
+    });
+}
+
+export const fetchPosts = () =>
+    dispatch => (
+        ReadableAPIUtil
+            .fetchPosts()
+            .then((response) => response.json())
+            .then((responseJson) => {
+                dispatch(receivePosts(responseJson))
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+    )

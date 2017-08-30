@@ -1,23 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {fetchCategories} from '../actions/index'
+import Category from './Category'
 
 class CategoryList extends Component {
     componentDidMount = () => {
-        console.log('component did mount')
         this.props.fetchData()
     }
     render() {
-        return <div className="book">
+        return <div className="categoryList">
             {this.props.categories.map((cat) => {
-                return <div key={cat.path}>{cat.name}</div>
+                return <Category cat={cat} key={cat.path} />
             })}
         </div>
     }
 }
 
 const mapStateToProps = (state, props) => ({
-    categories: state.categories
+    categories: state.categories.categories
 });
 
 const mapDispatchToProps = (dispatch) => {
