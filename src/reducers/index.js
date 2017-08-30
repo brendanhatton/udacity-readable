@@ -5,26 +5,27 @@ import {
     RECEIVE_POSTS
 } from '../actions'
 
-const initialState = {
-    categories: [],
-    posts: []
-}
-
-function categories(state = initialState, action) {
+function categories(state = [], action) {
     switch (action.type) {
         case RECEIVE_CATEGORIES:
-            const categories = action.categories
-            return {...state, categories: categories}
-        case RECEIVE_POSTS:
-            const posts = action.posts
-            return {...state, posts: posts}
+            // const categories = action.categories
+            return action.categories
         default:
             return state
     }
+}
 
+function posts(state = [], action) {
+    switch (action.type) {
+        case RECEIVE_POSTS:
+            // const posts = action.posts
+            return action.posts
+        default:
+            return state
+    }
 }
 
 export default combineReducers({
     categories,
-    // food,
+    posts,
 })
