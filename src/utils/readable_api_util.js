@@ -8,8 +8,8 @@ export const fetchPosts = () => {
     return fetch('http://localhost:5001/posts', { headers: { 'Authorization': 'my-secret' } })
 }
 
-export const voteUp = (post) => {
-    console.log('calling voteUp')
+export const vote = (post, voteString) => {
+    console.log('calling vote')
     return fetch(`http://localhost:5001/posts/${post.id}`,
         {
             headers: {
@@ -17,7 +17,7 @@ export const voteUp = (post) => {
                 'Content-Type': 'application/json'
             },
             method: 'POST',
-            body: JSON.stringify({option: 'upVote'})
+            body: JSON.stringify({option: voteString})
         }
     )
 }

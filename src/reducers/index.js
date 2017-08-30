@@ -3,7 +3,7 @@ import { combineReducers } from 'redux'
 import {
     RECEIVE_CATEGORIES,
     RECEIVE_POSTS,
-    VOTE_UP
+    VOTE
 } from '../actions'
 
 function categories(state = [], action) {
@@ -19,7 +19,7 @@ function posts(state = [], action) {
     switch (action.type) {
         case RECEIVE_POSTS:
             return action.posts
-        case VOTE_UP:
+        case VOTE:
             return state.map(item => {
                 if (item.id !== action.post.id) {
                     return item

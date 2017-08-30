@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchPosts, sendVoteUp } from '../actions/index'
+import { fetchPosts, sendVote } from '../actions/index'
 import Post from './Post'
 
 class PostList extends Component {
@@ -18,13 +18,14 @@ class PostList extends Component {
     onVoteUp = (post, e) => {
         e.preventDefault()
         console.log("vote up")
-        this.props.voteUp(post)
+        this.props.vote(post, 'upVote')
     }
 
 
     onVoteDown = (post, e) => {
         e.preventDefault()
         console.log("vote down")
+        this.props.vote(post, 'downVote')
     }
 }
 
@@ -35,7 +36,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = (dispatch) => {
     return {
         fetchData: () => dispatch(fetchPosts()),
-        voteUp: (post) => dispatch(sendVoteUp(post))
+        vote: (post, voteString) => dispatch(sendVote(post, voteString))
     };
 };
 
