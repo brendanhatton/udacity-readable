@@ -2,13 +2,13 @@ import { combineReducers } from 'redux'
 
 import {
     RECEIVE_CATEGORIES,
-    RECEIVE_POSTS
+    RECEIVE_POSTS,
+    VOTE_UP
 } from '../actions'
 
 function categories(state = [], action) {
     switch (action.type) {
         case RECEIVE_CATEGORIES:
-            // const categories = action.categories
             return action.categories
         default:
             return state
@@ -18,8 +18,15 @@ function categories(state = [], action) {
 function posts(state = [], action) {
     switch (action.type) {
         case RECEIVE_POSTS:
-            // const posts = action.posts
             return action.posts
+        case VOTE_UP:
+            return state.map(item => {
+                if (item.id !== action.post.id) {
+                    return item
+                } else {
+                    return action.post
+                }
+            })
         default:
             return state
     }
