@@ -3,6 +3,11 @@ export const fetchCategories = () => {
     return fetch('http://localhost:5001/categories', { headers: { 'Authorization': 'my-secret' } })
 }
 
+export const fetchCategory = (url) => {
+    console.log('fetch category '+url+' from API')
+    return fetch(`http://localhost:5001/${url}/posts`, { headers: { 'Authorization': 'my-secret' } })
+}
+
 export const fetchPosts = () => {
     console.log('fetch posts from API')
     return fetch('http://localhost:5001/posts', { headers: { 'Authorization': 'my-secret' } })

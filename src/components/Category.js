@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-
+import PostList from './PostList'
+import { fetchCategory } from '../actions/index'
 class Category extends Component {
+
     render() {
-        const cat = this.props.cat
-        return <a className="category-link" href={cat.path} key={cat.path}>{cat.name}</a>
+        //return <PostList dataSource={fetchCategory(this.props.match.params.category)} />
+        return <PostList />
     }
 }
 

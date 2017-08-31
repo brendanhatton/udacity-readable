@@ -1,6 +1,7 @@
 import * as ReadableAPIUtil from '../utils/readable_api_util';
 
 export const RECEIVE_CATEGORIES = "RECEIVE_CATEGORIES"
+export const RECEIVE_CATEGORY = "RECEIVE_CATEGORY"
 export const RECEIVE_POSTS = "RECEIVE_POSTS"
 export const RECEIVE_POST = "RECEIVE_POST"
 export const VOTE = "VOTE"
@@ -20,6 +21,26 @@ export const fetchCategories = () =>
             .then((response) => response.json())
             .then((responseJson) => {
                 dispatch(receiveCategories(responseJson.categories))
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+    )
+
+export const receiveCategory = (posts) => {
+    return ({
+        type: RECEIVE_CATEGORY,
+        posts
+    });
+}
+
+export const fetchCategoryPosts = (url) =>
+    dispatch => (
+        ReadableAPIUtil
+            .fetchCategory(url)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                dispatch(receiveCategory(responseJson))
             })
             .catch((error) => {
                 console.error(error);

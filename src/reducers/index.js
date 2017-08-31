@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 
 import {
     RECEIVE_CATEGORIES,
+    RECEIVE_CATEGORY,
     RECEIVE_POSTS,
     RECEIVE_POST,
     VOTE,
@@ -17,18 +18,20 @@ function categories(state = [], action) {
     }
 }
 
-function selectedcategory(state = [], action) {
-    switch (action.type) {
-        case RECEIVE_CATEGORIES:
-            return action.categories
-        default:
-            return state
-    }
-}
+// function selectedcategory(state = [], action) {
+//     switch (action.type) {
+//         case RECEIVE_CATEGORY:
+//             return action.posts
+//         default:
+//             return state
+//     }
+// }
 
 function posts(state = [], action) {
     switch (action.type) {
         case RECEIVE_POSTS:
+            return action.posts
+        case RECEIVE_CATEGORY:
             return action.posts
         case VOTE:
             return state.map(item => {
@@ -73,6 +76,7 @@ function selectedPost(state = [], action) {
 
 export default combineReducers({
     categories,
+    // selectedcategory,
     posts,
     selectedPost
 })

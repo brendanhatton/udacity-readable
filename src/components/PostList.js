@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchPosts } from '../actions/index'
 import PostSummary from './PostSummary'
 
 class PostList extends Component {
-    componentDidMount = () => {
-        this.props.fetchData()
-    }
     render() {
         return <div className="postList">
             {this.props.posts.map((post) => {
@@ -24,7 +20,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchData: () => dispatch(fetchPosts())
+        fetchData: (dataSource) => dispatch(dataSource)
     };
 };
 
