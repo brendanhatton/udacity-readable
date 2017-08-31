@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Vote from './Vote'
 import { connect } from 'react-redux'
 import { fetchPost, sendVote } from '../actions/index'
-import { Link } from 'react-router-dom'
+import CommentDetail from './CommentDetail'
 
 class PostDetail extends Component {
     componentDidMount = () => {
@@ -10,9 +10,8 @@ class PostDetail extends Component {
     }
 
     render() {
-        const post = this.props.post ? this.props.post : {}
+        const post = this.props.post
         return <div className="post">
-        <Link to="/">Back to home page</Link>
             <h2 key={post.id}>{post.title}</h2>
             <p>Category: {post.category}</p>
             <p>{post.body}</p>
@@ -20,6 +19,13 @@ class PostDetail extends Component {
             <p>
                 <Vote post={post} />
             </p>
+            <h3>Comments</h3>
+            <div className="comments">
+                {post.comments && post.comments.map((comment) => {
+                    return <CommentDetail key={comment.id} comment={comment} />
+                })}
+
+            </div>
         </div>
     }
 }

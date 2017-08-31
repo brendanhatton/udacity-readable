@@ -42,7 +42,7 @@ export const fetchCategoryPosts = (url) =>
             .then((responseJson) => {
                 dispatch(receiveCategory(responseJson))
                 responseJson.map((post) => {
-                    dispatch(fetchComments(post))
+                    return dispatch(fetchComments(post))
                 })
             })
             .catch((error) => {
@@ -66,7 +66,7 @@ export const fetchPosts = () =>
             .then((responseJson) => {
                 dispatch(receivePosts(responseJson))
                 responseJson.map((post) => {
-                    dispatch(fetchComments(post))
+                    return dispatch(fetchComments(post))
                 })
             })
             .catch((error) => {

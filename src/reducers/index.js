@@ -18,15 +18,6 @@ function categories(state = [], action) {
     }
 }
 
-// function selectedcategory(state = [], action) {
-//     switch (action.type) {
-//         case RECEIVE_CATEGORY:
-//             return action.posts
-//         default:
-//             return state
-//     }
-// }
-
 function posts(state = [], action) {
     switch (action.type) {
         case RECEIVE_POSTS:
@@ -64,6 +55,11 @@ function selectedPost(state = [], action) {
     switch (action.type) {
         case RECEIVE_POST:
             return action.post
+        case RECEIVE_COMMENTS:
+            return {
+                ...state,
+                comments: action.comments
+            }
         case VOTE:
             return {
                 ...state,
@@ -76,7 +72,6 @@ function selectedPost(state = [], action) {
 
 export default combineReducers({
     categories,
-    // selectedcategory,
     posts,
     selectedPost
 })
