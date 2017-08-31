@@ -41,6 +41,9 @@ export const fetchCategoryPosts = (url) =>
             .then((response) => response.json())
             .then((responseJson) => {
                 dispatch(receiveCategory(responseJson))
+                responseJson.map((post) => {
+                    dispatch(fetchComments(post))
+                })
             })
             .catch((error) => {
                 console.error(error);
@@ -62,6 +65,9 @@ export const fetchPosts = () =>
             .then((response) => response.json())
             .then((responseJson) => {
                 dispatch(receivePosts(responseJson))
+                responseJson.map((post) => {
+                    dispatch(fetchComments(post))
+                })
             })
             .catch((error) => {
                 console.error(error);
@@ -83,6 +89,7 @@ export const fetchPost = (id) =>
             .then((response) => response.json())
             .then((responseJson) => {
                 dispatch(receivePost(responseJson))
+                dispatch(fetchComments(responseJson))
             })
             .catch((error) => {
                 console.error(error);

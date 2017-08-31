@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { fetchComments } from '../actions/index'
 
 class CommentLink extends Component {
-    componentDidMount = () => {
-        this.props.fetchData(this.props.post)
-    }
+    // componentDidMount = () => {
+    //     this.props.fetchData(this.props.post)
+    // }
     render() {
         const post = this.props.post
         return <span className="commentLink">
@@ -20,7 +20,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchData: (post) => dispatch(fetchComments(post))
+        // fetchData: (post) => dispatch(fetchComments(post))
     };
 };
 
