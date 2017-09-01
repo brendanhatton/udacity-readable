@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PostSummary from './PostSummary'
+import { sortByVote } from '../utils/sort_orders'
 
 class PostList extends Component {
     render() {
@@ -11,8 +12,6 @@ class PostList extends Component {
         </div>
     }
 }
-
-const sortByVote = () => (a, b) => b.voteScore - a.voteScore
 
 const mapStateToProps = (state, props) => ({
     posts: state.posts.sort(state.sortOrder ? state.sortOrder : sortByVote)

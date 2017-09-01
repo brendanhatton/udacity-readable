@@ -18,9 +18,9 @@ export const fetchPost = (id) => {
     return fetch(`http://localhost:5001/posts/${id}`, { headers: { 'Authorization': 'my-secret' } })
 }
 
-export const vote = (post, voteString) => {
+export const vote = (post, voteString, voteableType) => {
     console.log('calling vote')
-    return fetch(`http://localhost:5001/posts/${post.id}`,
+    return fetch(`http://localhost:5001/${voteableType}/${post.id}`,
         {
             headers: {
                 'Authorization': 'my-secret',

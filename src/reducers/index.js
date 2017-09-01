@@ -26,14 +26,7 @@ function posts(state = [], action) {
             return action.posts
         case VOTE:
             return state.map(item => {
-                if (item.id !== action.post.id) {
-                    return item
-                } else {
-                    return {
-                        ...item,
-                        voteScore: action.post.voteScore
-                    }
-                }
+                return (updatePostOrComment(item, action))
             })
         case RECEIVE_COMMENTS:
             return state.map(item => {
@@ -51,6 +44,32 @@ function posts(state = [], action) {
     }
 }
 
+function updatePostOrComment(item, action) {
+    if (item.id === action.voteable.id) { //ie match a post object
+        item = {
+            ...item,
+            voteScore: action.voteable.voteScore
+        }
+    } else if (item.comments) { //look for a comment
+        item.comments.map((comment) => {
+            if (comment.id === action.voteable.id) {
+                let newComment = {...comment,
+                    voteScore: action.voteable.voteScore
+                }
+                let copiedComments = item.comments.slice()
+                let updatedComments = copiedComments.filter((c) => c.id !== comment.id)
+                updatedComments.push(newComment)
+                item = {
+                    ...item,
+                    comments: updatedComments
+                    
+                }
+            }
+        })
+    }
+    return item
+}
+
 function selectedPost(state = [], action) {
     switch (action.type) {
         case RECEIVE_POST:
@@ -61,10 +80,7 @@ function selectedPost(state = [], action) {
                 comments: action.comments
             }
         case VOTE:
-            return {
-                ...state,
-                voteScore: action.post.voteScore
-            }
+            return updatePostOrComment(state, action)
         default:
             return state
     }

@@ -1,0 +1,1 @@
+export const sortByVote = (a, b) => b.voteScore - a.voteScore

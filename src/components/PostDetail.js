@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import Vote from './Vote'
 import { connect } from 'react-redux'
-import { fetchPost, sendVote } from '../actions/index'
+import { fetchPost } from '../actions/index'
 import CommentDetail from './CommentDetail'
+import { sortByVote } from '../utils/sort_orders'
 
 class PostDetail extends Component {
     componentDidMount = () => {
@@ -17,11 +18,11 @@ class PostDetail extends Component {
             <p>{post.body}</p>
             <p>Author: {post.author}</p>
             <p>
-                <Vote post={post} />
+                <Vote voteable={post} voteableType='posts' />
             </p>
             <h3>Comments</h3>
             <div className="comments">
-                {post.comments && post.comments.map((comment) => {
+                {post.comments && post.comments.sort(sortByVote).map((comment) => {
                     return <CommentDetail key={comment.id} comment={comment} />
                 })}
 
@@ -36,8 +37,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchData: (id) => dispatch(fetchPost(id)),
-        vote: (post, voteString) => dispatch(sendVote(post, voteString))
+        fetchData: (id) => dispatch(fetchPost(id))
     };
 };
 

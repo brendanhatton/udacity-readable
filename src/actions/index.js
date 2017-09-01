@@ -96,17 +96,17 @@ export const fetchPost = (id) =>
             })
     )
 
-export const vote = (post) => {
+export const vote = (voteable) => {
     return ({
         type: VOTE,
-        post
+        voteable
     });
 }
 
-export const sendVote = (post, voteString) =>
+export const sendVote = (voteable, voteString, voteableType) =>
     dispatch => (
         ReadableAPIUtil
-            .vote(post, voteString)
+            .vote(voteable, voteString, voteableType)
             .then((response) => response.json())
             .then((responseJson) => {
                 dispatch(vote(responseJson))

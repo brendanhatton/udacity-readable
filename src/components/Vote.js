@@ -4,36 +4,34 @@ import { connect } from 'react-redux'
 
 class Vote extends Component {
     render() {
-        const post = this.props.post
+        const voteable = this.props.voteable
         return <span className="vote-area">
-            <span className="post-meta">Vote count {post.voteScore}
-                <button onClick={(e) => this.onVoteUp(post, e)}>up</button>
-                <button onClick={(e) => this.onVoteDown(post, e)}>down</button>
+            <span className="voteable-meta">Vote count {voteable.voteScore}
+                <button onClick={(e) => this.onVoteUp(voteable, e)}>up</button>
+                <button onClick={(e) => this.onVoteDown(voteable, e)}>down</button>
             </span>
         </span>
     }
 
-    onVoteUp = (post, e) => {
+    onVoteUp = (voteable, e) => {
         e.preventDefault()
         console.log("vote up")
-        this.props.vote(post, 'upVote')
+        this.props.vote(voteable, 'upVote', this.props.voteableType)
     }
 
 
-    onVoteDown = (post, e) => {
+    onVoteDown = (voteable, e) => {
         e.preventDefault()
         console.log("vote down")
-        this.props.vote(post, 'downVote')
+        this.props.vote(voteable, 'downVote', this.props.voteableType)
     }
 }
 
-const mapStateToProps = (state, props) => ({
-    // posts: state.posts.sort(state.sortOrder ? state.sortOrder : sortByVote)
-});
+const mapStateToProps = (state, props) => ({ });
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        vote: (post, voteString) => dispatch(sendVote(post, voteString))
+        vote: (voteable, voteString, voteableType) => dispatch(sendVote(voteable, voteString, voteableType))
     };
 };
 
