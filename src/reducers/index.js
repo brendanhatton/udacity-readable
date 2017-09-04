@@ -6,7 +6,9 @@ import {
     RECEIVE_POSTS,
     RECEIVE_POST,
     VOTE,
-    RECEIVE_COMMENTS
+    RECEIVE_COMMENTS,
+    OPEN_COMMENT_MODAL,
+    CLOSE_COMMENT_MODAL
 } from '../actions'
 
 function categories(state = [], action) {
@@ -53,7 +55,8 @@ function updatePostOrComment(item, action) {
     } else if (item.comments) { //look for a comment
         item.comments.map((comment) => {
             if (comment.id === action.voteable.id) {
-                let newComment = {...comment,
+                let newComment = {
+                    ...comment,
                     voteScore: action.voteable.voteScore
                 }
                 let copiedComments = item.comments.slice()
@@ -62,8 +65,9 @@ function updatePostOrComment(item, action) {
                 item = {
                     ...item,
                     comments: updatedComments
-                    
+
                 }
+                return item
             }
         })
     }
@@ -86,8 +90,22 @@ function selectedPost(state = [], action) {
     }
 }
 
+function commentModalOpen(state = false, action) {
+    switch (action.type) {
+        case OPEN_COMMENT_MODAL:
+            return true
+        case CLOSE_COMMENT_MODAL:
+            return false
+        default:
+            return state
+    }
+
+
+}
+
 export default combineReducers({
     categories,
     posts,
-    selectedPost
+    selectedPost,
+    commentModalOpen
 })

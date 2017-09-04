@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import Vote from './Vote'
 import { connect } from 'react-redux'
-import { fetchPost } from '../actions/index'
+import { fetchPost, openCommentModal } from '../actions/index'
 import CommentDetail from './CommentDetail'
+import CommentModal from './CommentModal'
 import { sortByVote } from '../utils/sort_orders'
 
 class PostDetail extends Component {
@@ -21,15 +22,19 @@ class PostDetail extends Component {
                 <Vote voteable={post} voteableType='posts' />
             </p>
             <h3>Comments</h3>
+            <button onClick={this.props.openCommentModal}>Add Comment</button>
             <div className="comments">
                 {post.comments && post.comments.sort(sortByVote).map((comment) => {
                     return <CommentDetail key={comment.id} comment={comment} />
                 })}
 
             </div>
+            <CommentModal post={post}/>
         </div>
     }
 }
+
+
 
 const mapStateToProps = (state, props) => ({
     post: state.selectedPost
@@ -37,7 +42,8 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchData: (id) => dispatch(fetchPost(id))
+        fetchData: (id) => dispatch(fetchPost(id)),
+        openCommentModal: () => dispatch(openCommentModal())
     };
 };
 

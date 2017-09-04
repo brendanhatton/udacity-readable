@@ -6,6 +6,8 @@ export const RECEIVE_POSTS = "RECEIVE_POSTS"
 export const RECEIVE_POST = "RECEIVE_POST"
 export const VOTE = "VOTE"
 export const RECEIVE_COMMENTS = "RECEIVE_COMMENTS"
+export const OPEN_COMMENT_MODAL = "OPEN_COMMENT_MODAL"
+export const CLOSE_COMMENT_MODAL = "CLOSE_COMMENT_MODAL"
 
 export const receiveCategories = (categories) => {
     return ({
@@ -136,3 +138,29 @@ export const fetchComments = (post) =>
                 console.error(error);
             })
     )
+
+export const openCommentModal = () => ({
+    type: OPEN_COMMENT_MODAL
+})
+
+export const closeCommentModal = () => ({
+    type: CLOSE_COMMENT_MODAL
+})
+
+export const createComment = (comment) => {
+    let postId = comment.post.id
+    return dispatch => (
+        ReadableAPIUtil
+            .createComment(comment)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log('closing modal')
+                dispatch(fetchPost(postId))
+                dispatch(closeCommentModal())
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+
+    )
+}

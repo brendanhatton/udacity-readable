@@ -1,10 +1,12 @@
+const uuidv4 = require('uuid/v4');
+
 export const fetchCategories = () => {
     console.log('fetch categories from API')
     return fetch('http://localhost:5001/categories', { headers: { 'Authorization': 'my-secret' } })
 }
 
 export const fetchCategory = (url) => {
-    console.log('fetch category '+url+' from API')
+    console.log('fetch category ' + url + ' from API')
     return fetch(`http://localhost:5001/${url}/posts`, { headers: { 'Authorization': 'my-secret' } })
 }
 
@@ -27,13 +29,30 @@ export const vote = (post, voteString, voteableType) => {
                 'Content-Type': 'application/json'
             },
             method: 'POST',
-            body: JSON.stringify({option: voteString})
+            body: JSON.stringify({ option: voteString })
         }
     )
 }
 
-
 export const fetchComments = (post) => {
     console.log('fetch comments from API')
     return fetch(`http://localhost:5001/posts/${post.id}/comments`, { headers: { 'Authorization': 'my-secret' } })
+}
+
+export const createComment = (comment) => {
+    console.log('create comment from API')
+    comment.timestamp = Date.now()
+    comment.id = uuidv4()
+    comment.parentId = comment.post.id
+    comment.post = null //no need to serialize
+    comment.author = comment.owner //api documentation is wrong
+    return fetch(`http://localhost:5001/comments/`,
+        {
+            headers: {
+                'Authorization': 'my-secret',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(comment)
+        })
 }
