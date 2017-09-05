@@ -35,8 +35,8 @@ class PostDetail extends Component {
             <h3>Comments</h3>
             <button onClick={this.props.openCommentModal}>Add Comment</button>
             <div className="comments">
-                    {this.props.comments && this.props.comments.sort(sortByVote).map((comment) => {
-                    return <CommentDetail key={comment.id} comment={comment} openCommentModal={this.props.openCommentModal} deleteComment={this.props.deleteComment}/>
+                {this.props.comments && this.props.comments.sort(sortByVote).map((comment) => {
+                    return <CommentDetail key={comment.id} comment={comment} openCommentModal={this.props.openCommentModal} deleteComment={this.props.deleteComment} />
                 })}
 
             </div>

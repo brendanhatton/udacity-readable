@@ -11,7 +11,7 @@ class PostList extends Component {
             {this.props.match.params.category && <button onClick={this.props.openPostModal}>Add Post: {this.props.match.params.category}</button>}
 
             {this.props.posts.map((post) => {
-                return <PostSummary post={post} key={post.id} onVoteUp={this.onVoteUp} onVoteDown={this.onVoteDown} openPostModal={this.props.openPostModal} deletePost={this.props.deletePost} />
+                return <PostSummary post={post} key={post.id} onVoteUp={this.onVoteUp} onVoteDown={this.onVoteDown} openPostModal={this.props.openPostModal} deletePost={this.props.deletePost} category={this.props.match.params.category} />
             })}
             <PostModal category={this.props.match.params.category} />
         </div>
@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         fetchData: (dataSource) => dispatch(dataSource),
         openPostModal: (post) => dispatch(openPostModal(post)),
-        deletePost: (post) => dispatch(deletePost(post))
+        deletePost: (post, categoryPage) => dispatch(deletePost(post))
     };
 };
 
