@@ -74,3 +74,36 @@ export const updateComment = (comment) => {
             body: JSON.stringify(comment)
         })
 }
+
+
+export const createPost = (post) => {
+    console.log('create post from API')
+    post.timestamp = Date.now()
+    post.id = uuidv4()
+    post.author = post.owner //api documentation is wrong
+    return fetch(`http://localhost:5001/posts/`,
+        {
+            headers: {
+                'Authorization': 'my-secret',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(post)
+        })
+}
+
+
+export const updatePost = (post) => {
+    console.log('update post from API')
+    post.timestamp = Date.now()
+    post.author = post.owner //api documentation is wrong
+    return fetch(`http://localhost:5001/posts/${post.id}`,
+        {
+            headers: {
+                'Authorization': 'my-secret',
+                'Content-Type': 'application/json'
+            },
+            method: 'PUT',
+            body: JSON.stringify(post)
+        })
+}

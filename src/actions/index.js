@@ -8,6 +8,9 @@ export const VOTE = "VOTE"
 export const RECEIVE_COMMENTS = "RECEIVE_COMMENTS"
 export const OPEN_COMMENT_MODAL = "OPEN_COMMENT_MODAL"
 export const CLOSE_COMMENT_MODAL = "CLOSE_COMMENT_MODAL"
+export const OPEN_POST_MODAL = "OPEN_POST_MODAL"
+export const CLOSE_POST_MODAL = "CLOSE_POST_MODAL"
+export const RECEIVE_CREATE_POST = "RECEIVE_CREATE_POST"
 
 export const receiveCategories = (categories) => {
     return ({
@@ -148,6 +151,20 @@ export const closeCommentModal = () => ({
     type: CLOSE_COMMENT_MODAL
 })
 
+export const openPostModal = (post) => ({
+    type: OPEN_POST_MODAL,
+    post
+})
+
+export const closePostModal = () => ({
+    type: CLOSE_POST_MODAL
+})
+
+export const receiveCreatePost = (post) => ({
+    type: RECEIVE_CREATE_POST,
+    post
+})
+
 export const createComment = (comment) => {
     let postId = comment.post.id
     return dispatch => (
@@ -173,6 +190,38 @@ export const updateComment = (comment) => {
             .then((response) => response.json())
             .then((responseJson) => {
                 dispatch(fetchPost(postId))
+                dispatch(closeCommentModal())
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+
+    )
+}
+
+
+export const createPost = (post) => {
+    return dispatch => (
+        ReadableAPIUtil
+            .createPost(post)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                dispatch(receiveCreatePost(responseJson))
+                dispatch(closePostModal())
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+    )
+}
+
+export const updatePost = (post) => {
+    return dispatch => (
+        ReadableAPIUtil
+            .updatePost(post)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                // dispatch(fetchPost(postId))
                 dispatch(closeCommentModal())
             })
             .catch((error) => {

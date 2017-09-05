@@ -1,19 +1,21 @@
 import React, { Component } from 'react'
 import Modal from 'react-modal'
 import { connect } from 'react-redux'
-import { closeCommentModal, createComment, updateComment } from '../actions/index'
+import { closePostModal, createPost, updatePost } from '../actions/index'
 
-class CommentModal extends Component {
+class PostModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
             owner: '',
-            body: ''
+            title: '',
+            body: '',
+            category: props.category
         };
 
         this.handleInputChange = this.handleInputChange.bind(this)
-        this.createComment = this.createComment.bind(this)
-        this.closeCommentModal = this.closeCommentModal.bind(this)
+        this.createPost = this.createPost.bind(this)
+        this.closePostModal = this.closePostModal.bind(this)
         this.onOpen = this.onOpen.bind(this)
     }
 
@@ -30,26 +32,29 @@ class CommentModal extends Component {
     resetState() {
         this.setState({
             owner: '',
-            body: ''
+            title: '',
+            body: '',
+            category: this.props.category
+
         })
     }
 
-    createComment(e) {
+    createPost(e) {
         e.preventDefault()
         this.resetState()
-        this.props.addOrEditComment({ post: this.props.post, owner: this.state.owner, body: this.state.body, id: this.props.comment.id })
+        this.props.addOrEditPost({ post: this.props.post, title: this.state.title, owner: this.state.owner, body: this.state.body, category: this.state.category })
     }
 
-    closeCommentModal() {
+    closePostModal() {
         this.resetState()
-        this.props.closeCommentModal()
+        this.props.closePostModal()
     }
 
     onOpen() {
-        if (this.props.comment && this.props.comment.id) {
+        if (this.props.post && this.props.post.id) {
             this.setState({
-                owner: this.props.comment.author,
-                body: this.props.comment.body
+                owner: this.props.post.author,
+                body: this.props.post.body
             })
         } else {
             this.resetState()
@@ -57,13 +62,13 @@ class CommentModal extends Component {
     }
 
     render() {
-        let title = this.props.comment && this.props.comment.id ? 'Update Comment' : 'Add Comment'
+        let title = this.props.post && this.props.post.id ? 'Update Post' : 'Add Post'
         return <Modal
             className='modal'
             overlayClassName='overlay'
-            isOpen={this.props.commentModalOpen}
+            isOpen={this.props.postModalOpen}
             onAfterOpen={this.onOpen}
-            onRequestClose={this.closeCommentModal}
+            onRequestClose={this.closePostModal}
             contentLabel='Modal'
         >
             <div className='container'>
@@ -75,10 +80,21 @@ class CommentModal extends Component {
                         <input
                             size="50"
                             name="owner"
-                            className='comment-author'
+                            className='post-author'
                             type='text'
                             placeholder='author'
                             value={this.state.owner}
+                            onChange={this.handleInputChange}
+                        />
+                    </p>
+                    <p>
+                        <input
+                            size="50"
+                            name="title"
+                            className='post-title'
+                            type='text'
+                            placeholder='title'
+                            value={this.state.title}
                             onChange={this.handleInputChange}
                         />
                     </p>
@@ -88,15 +104,15 @@ class CommentModal extends Component {
                             rows="10"
                             maxLength="1000"
                             name="body"
-                            className='comment-body'
-                            placeholder='Enter comment text...'
+                            className='post-body'
+                            placeholder='Enter post text...'
                             value={this.state.body}
                             onChange={this.handleInputChange}
                         />
                     </p>
 
                     <button
-                        onClick={(e) => this.createComment(e)}>
+                        onClick={(e) => this.createPost(e)}>
                         {title}
                     </button>
                 </div>
@@ -106,22 +122,22 @@ class CommentModal extends Component {
 }
 
 const mapStateToProps = (state, props) => ({
-    commentModalOpen: state.commentModalOpen.open,
-    comment: state.commentModalOpen.comment
+    postModalOpen: state.postModalOpen.open,
+    post: state.postModalOpen.post
 })
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        closeCommentModal: () => dispatch(closeCommentModal()),
-        addOrEditComment: (comment) => {
-            comment.id ?
-                dispatch(updateComment(comment))
+        closePostModal: () => dispatch(closePostModal()),
+        addOrEditPost: (post) => {
+            post.id ?
+                dispatch(updatePost(post))
                 :
-                dispatch(createComment(comment))
+                dispatch(createPost(post))
 
         }
     }
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(CommentModal)
+export default connect(mapStateToProps, mapDispatchToProps)(PostModal)

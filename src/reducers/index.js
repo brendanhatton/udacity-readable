@@ -8,7 +8,10 @@ import {
     VOTE,
     RECEIVE_COMMENTS,
     OPEN_COMMENT_MODAL,
-    CLOSE_COMMENT_MODAL
+    CLOSE_COMMENT_MODAL,
+    OPEN_POST_MODAL,
+    CLOSE_POST_MODAL,
+    RECEIVE_CREATE_POST
 } from '../actions'
 
 function categories(state = [], action) {
@@ -24,6 +27,10 @@ function posts(state = [], action) {
     switch (action.type) {
         case RECEIVE_POSTS:
             return action.posts
+        case RECEIVE_CREATE_POST:
+            let updatedPosts = state.slice()
+            updatedPosts.push(action.post)
+            return updatedPosts
         case RECEIVE_CATEGORY:
             return action.posts
         case VOTE:
@@ -99,13 +106,23 @@ function commentModalOpen(state = { open: false }, action) {
         default:
             return state
     }
+}
 
-
+function postModalOpen(state = { open: false }, action) {
+    switch (action.type) {
+        case OPEN_POST_MODAL:
+            return { open: true, comment: action.post }
+        case CLOSE_POST_MODAL:
+            return { open: false }
+        default:
+            return state
+    }
 }
 
 export default combineReducers({
     categories,
     posts,
     selectedPost,
-    commentModalOpen
+    commentModalOpen,
+    postModalOpen
 })
