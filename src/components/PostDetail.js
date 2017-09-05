@@ -6,7 +6,6 @@ import CommentDetail from './CommentDetail'
 import CommentModal from './CommentModal'
 import PostModal from './PostModal'
 import SortPicker from './SortPicker'
-import { sortByVote } from '../utils/sort_orders'
 
 class PostDetail extends Component {
     constructor(props) {
