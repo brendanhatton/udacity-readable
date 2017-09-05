@@ -203,6 +203,22 @@ export const updateComment = (comment) => {
     )
 }
 
+export const deleteComment = (comment) => {
+    let postId = comment.parentId
+    return dispatch => (
+        ReadableAPIUtil
+            .deleteComment(comment)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                dispatch(fetchPost(postId))
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+
+    )
+}
+
 
 export const createPost = (post) => {
     return dispatch => (

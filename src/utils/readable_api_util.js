@@ -57,9 +57,8 @@ export const createComment = (comment) => {
         })
 }
 
-
 export const updateComment = (comment) => {
-    console.log('update  comment from API')
+    console.log('update comment from API')
     comment.timestamp = Date.now()
     comment.parentId = comment.post.id
     comment.post = null //no need to serialize
@@ -75,6 +74,16 @@ export const updateComment = (comment) => {
         })
 }
 
+export const deleteComment = (comment) => {
+    console.log('delete comment from API')
+    return fetch(`http://localhost:5001/comments/${comment.id}`,
+        {
+            headers: {
+                'Authorization': 'my-secret',
+            },
+            method: 'DELETE'
+        })
+}
 
 export const createPost = (post) => {
     console.log('create post from API')
