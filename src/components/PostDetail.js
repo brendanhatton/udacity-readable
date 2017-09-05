@@ -25,7 +25,7 @@ class PostDetail extends Component {
             <button onClick={this.props.openCommentModal}>Add Comment</button>
             <div className="comments">
                 {post.comments && post.comments.sort(sortByVote).map((comment) => {
-                    return <CommentDetail key={comment.id} comment={comment} />
+                    return <CommentDetail key={comment.id} comment={comment} openCommentModal={this.props.openCommentModal}/>
                 })}
 
             </div>
@@ -43,7 +43,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = (dispatch) => {
     return {
         fetchData: (id) => dispatch(fetchPost(id)),
-        openCommentModal: () => dispatch(openCommentModal())
+        openCommentModal: (comment) => dispatch(openCommentModal(comment))
     };
 };
 

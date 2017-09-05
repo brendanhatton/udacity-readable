@@ -139,8 +139,9 @@ export const fetchComments = (post) =>
             })
     )
 
-export const openCommentModal = () => ({
-    type: OPEN_COMMENT_MODAL
+export const openCommentModal = (comment) => ({
+    type: OPEN_COMMENT_MODAL,
+    comment
 })
 
 export const closeCommentModal = () => ({
@@ -154,7 +155,23 @@ export const createComment = (comment) => {
             .createComment(comment)
             .then((response) => response.json())
             .then((responseJson) => {
-                console.log('closing modal')
+                dispatch(fetchPost(postId))
+                dispatch(closeCommentModal())
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+
+    )
+}
+
+export const updateComment = (comment) => {
+    let postId = comment.post.id
+    return dispatch => (
+        ReadableAPIUtil
+            .updateComment(comment)
+            .then((response) => response.json())
+            .then((responseJson) => {
                 dispatch(fetchPost(postId))
                 dispatch(closeCommentModal())
             })

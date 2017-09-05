@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Modal from 'react-modal'
 import { connect } from 'react-redux'
-import { closeCommentModal, createComment } from '../actions/index'
+import { closeCommentModal, createComment, updateComment } from '../actions/index'
 
 class CommentModal extends Component {
     constructor(props) {
@@ -14,6 +14,7 @@ class CommentModal extends Component {
         this.handleInputChange = this.handleInputChange.bind(this)
         this.createComment = this.createComment.bind(this)
         this.closeCommentModal = this.closeCommentModal.bind(this)
+        this.onOpen = this.onOpen.bind(this)
     }
 
     handleInputChange(event) {
@@ -36,7 +37,7 @@ class CommentModal extends Component {
     createComment(e) {
         e.preventDefault()
         this.resetState()
-        this.props.addComment({ post: this.props.post, owner: this.state.owner, body: this.state.body })
+        this.props.addOrEditComment({ post: this.props.post, owner: this.state.owner, body: this.state.body, id: this.props.comment.id })
     }
 
     closeCommentModal() {
@@ -44,18 +45,31 @@ class CommentModal extends Component {
         this.props.closeCommentModal()
     }
 
+    onOpen() {
+        if (this.props.comment && this.props.comment.id) {
+            this.setState({
+                owner: this.props.comment.author,
+                body: this.props.comment.body
+            })
+        } else {
+            this.resetState()
+        }
+    }
+
     render() {
+        let title = this.props.comment && this.props.comment.id ? 'Update Comment' : 'Add Comment'
         return <Modal
             className='modal'
             overlayClassName='overlay'
             isOpen={this.props.commentModalOpen}
+            onAfterOpen={this.onOpen}
             onRequestClose={this.closeCommentModal}
             contentLabel='Modal'
         >
             <div className='container'>
                 <h3 className='subheader'>
-                    Add Comment
-                   </h3>
+                    {title}
+                </h3>
                 <div className='search'>
                     <p>
                         <input
@@ -83,7 +97,7 @@ class CommentModal extends Component {
 
                     <button
                         onClick={(e) => this.createComment(e)}>
-                        Add comment
+                        {title}
                     </button>
                 </div>
             </div>
@@ -92,15 +106,19 @@ class CommentModal extends Component {
 }
 
 const mapStateToProps = (state, props) => ({
-    commentModalOpen: state.commentModalOpen
+    commentModalOpen: state.commentModalOpen.open,
+    comment: state.commentModalOpen.comment
 })
 
 const mapDispatchToProps = (dispatch) => {
     return {
         closeCommentModal: () => dispatch(closeCommentModal()),
-        addComment: (comment) => {
-            console.log("in the disapth to props method")
-            dispatch(createComment(comment))
+        addOrEditComment: (comment) => {
+            comment.id ?
+                dispatch(updateComment(comment))
+                :
+                dispatch(createComment(comment))
+
         }
     }
 }

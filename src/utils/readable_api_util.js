@@ -56,3 +56,21 @@ export const createComment = (comment) => {
             body: JSON.stringify(comment)
         })
 }
+
+
+export const updateComment = (comment) => {
+    console.log('update  comment from API')
+    comment.timestamp = Date.now()
+    comment.parentId = comment.post.id
+    comment.post = null //no need to serialize
+    comment.author = comment.owner //api documentation is wrong
+    return fetch(`http://localhost:5001/comments/${comment.id}`,
+        {
+            headers: {
+                'Authorization': 'my-secret',
+                'Content-Type': 'application/json'
+            },
+            method: 'PUT',
+            body: JSON.stringify(comment)
+        })
+}

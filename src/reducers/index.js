@@ -67,8 +67,8 @@ function updatePostOrComment(item, action) {
                     comments: updatedComments
 
                 }
-                return item
             }
+            return item
         })
     }
     return item
@@ -90,12 +90,12 @@ function selectedPost(state = [], action) {
     }
 }
 
-function commentModalOpen(state = false, action) {
+function commentModalOpen(state = { open: false }, action) {
     switch (action.type) {
         case OPEN_COMMENT_MODAL:
-            return true
+            return { open: true, comment: action.comment }
         case CLOSE_COMMENT_MODAL:
-            return false
+            return { open: false }
         default:
             return state
     }
