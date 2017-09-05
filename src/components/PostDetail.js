@@ -1,14 +1,24 @@
 import React, { Component } from 'react'
 import Vote from './Vote'
 import { connect } from 'react-redux'
-import { fetchPost, openCommentModal } from '../actions/index'
+import { fetchPost, openCommentModal, openPostModal } from '../actions/index'
 import CommentDetail from './CommentDetail'
 import CommentModal from './CommentModal'
+import PostModal from './PostModal'
 import { sortByVote } from '../utils/sort_orders'
 
 class PostDetail extends Component {
+    constructor(props) {
+        super(props);
+        this.editPost = this.editPost.bind(this)
+    }
+
     componentDidMount = () => {
         this.props.fetchData(this.props.match.params.id)
+    }
+
+    editPost() {
+        this.props.openPostModal(this.props.post)
     }
 
     render() {
@@ -18,6 +28,7 @@ class PostDetail extends Component {
             <p>Category: {post.category}</p>
             <p>{post.body}</p>
             <p>Author: {post.author}</p>
+            <button onClick={this.editPost}>edit</button>
             <p>
                 <Vote voteable={post} voteableType='posts' />
             </p>
@@ -25,11 +36,12 @@ class PostDetail extends Component {
             <button onClick={this.props.openCommentModal}>Add Comment</button>
             <div className="comments">
                 {post.comments && post.comments.sort(sortByVote).map((comment) => {
-                    return <CommentDetail key={comment.id} comment={comment} openCommentModal={this.props.openCommentModal}/>
+                    return <CommentDetail key={comment.id} comment={comment} openCommentModal={this.props.openCommentModal} />
                 })}
 
             </div>
-            <CommentModal post={post}/>
+            <CommentModal post={post} />
+            <PostModal category={post.category} post={post} />
         </div>
     }
 }
@@ -43,7 +55,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = (dispatch) => {
     return {
         fetchData: (id) => dispatch(fetchPost(id)),
-        openCommentModal: (comment) => dispatch(openCommentModal(comment))
+        openCommentModal: (comment) => dispatch(openCommentModal(comment)),
+        openPostModal: (post) => dispatch(openPostModal(post))
     };
 };
 

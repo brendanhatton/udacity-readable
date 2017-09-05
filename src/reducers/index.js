@@ -34,7 +34,11 @@ function posts(state = [], action) {
             return updatedPosts
         case RECEIVE_UPDATE_POST:
             let updatedSinglePost = state.slice().filter((p) => p.id !== action.post.id)
-            updatedSinglePost.push(action.post)
+            let originalPost = state.slice().filter((p) => p.id === action.post.id)
+            updatedSinglePost.push({
+                ...action.post,
+                comments: originalPost[0].comments
+            })
             return updatedSinglePost
         case RECEIVE_CATEGORY:
             return action.posts
@@ -94,6 +98,11 @@ function selectedPost(state = [], action) {
             return {
                 ...state,
                 comments: action.comments
+            }
+        case RECEIVE_UPDATE_POST:
+            return {
+                ...action.post,
+                comments: state.comments
             }
         case VOTE:
             return updatePostOrComment(state, action)
