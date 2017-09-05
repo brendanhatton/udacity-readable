@@ -2,19 +2,20 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PostSummary from './PostSummary'
 import { sortByVote } from '../utils/sort_orders'
-import { openPostModal } from '../actions/index'
+import { openPostModal, deletePost } from '../actions/index'
 import PostModal from './PostModal'
 
 class PostList extends Component {
     render() {
         return <div className="postList">
-        <button onClick={this.props.openPostModal}>Add Post: {this.props.match.params.category}</button>
+            {this.props.match.params.category && <button onClick={this.props.openPostModal}>Add Post: {this.props.match.params.category}</button>}
+
             {this.props.posts.map((post) => {
-                return <PostSummary post={post} key={post.id} onVoteUp={this.onVoteUp} onVoteDown={this.onVoteDown} openPostModal={this.props.openPostModal}/>
+                return <PostSummary post={post} key={post.id} onVoteUp={this.onVoteUp} onVoteDown={this.onVoteDown} openPostModal={this.props.openPostModal} deletePost={this.props.deletePost} />
             })}
             <PostModal category={this.props.match.params.category} />
         </div>
-        
+
     }
 }
 
@@ -26,14 +27,15 @@ const mapStateToProps = (state, props) => {
         posts = state.posts
     }
     return ({
-        posts: posts.sort(state.sortOrder ? state.sortOrder : sortByVote)
+        posts: posts.filter((p) => !p.deleted).sort(state.sortOrder ? state.sortOrder : sortByVote)
     })
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         fetchData: (dataSource) => dispatch(dataSource),
-        openPostModal: (post) => dispatch(openPostModal(post))
+        openPostModal: (post) => dispatch(openPostModal(post)),
+        deletePost: (post) => dispatch(deletePost(post))
     };
 };
 

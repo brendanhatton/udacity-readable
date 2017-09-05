@@ -92,7 +92,6 @@ export const createPost = (post) => {
         })
 }
 
-
 export const updatePost = (post) => {
     console.log('update post from API')
     post.timestamp = Date.now()
@@ -105,5 +104,16 @@ export const updatePost = (post) => {
             },
             method: 'PUT',
             body: JSON.stringify(post)
+        })
+}
+
+export const deletePost = (post) => {
+    console.log('delete post from API')
+    return fetch(`http://localhost:5001/posts/${post.id}`,
+        {
+            headers: {
+                'Authorization': 'my-secret'
+            },
+            method: 'DELETE'
         })
 }

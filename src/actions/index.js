@@ -234,3 +234,20 @@ export const updatePost = (post) => {
 
     )
 }
+
+
+export const deletePost = (post, category) => {
+    return dispatch => (
+        ReadableAPIUtil
+            .deletePost(post)
+            .then((response) =>
+                category ? dispatch(fetchCategoryPosts(post.category))
+                    :
+                    dispatch(fetchPosts())
+            )
+            .catch((error) => {
+                console.error(error);
+            })
+
+    )
+}
