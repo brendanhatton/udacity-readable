@@ -4,6 +4,15 @@ import Vote from './Vote'
 import { Link } from 'react-router-dom'
 
 class PostSummary extends Component {
+    constructor(props) {
+        super(props);
+        this.editPost = this.editPost.bind(this)
+    }
+
+    editPost() {
+        this.props.openPostModal(this.props.post)
+    }
+
     render() {
         const post = this.props.post
         return <div className="post">
@@ -15,9 +24,9 @@ class PostSummary extends Component {
 
 
 
-            <p>Author: {post.author}</p>
+            <p>Author: {post.author} <button onClick={this.editPost}>edit</button></p>
             <p>
-                <Vote voteable={post} voteableType='posts'/>
+                <Vote voteable={post} voteableType='posts' />
                 <CommentLink post={post} />
             </p>
 

@@ -10,7 +10,7 @@ class PostList extends Component {
         return <div className="postList">
         <button onClick={this.props.openPostModal}>Add Post: {this.props.match.params.category}</button>
             {this.props.posts.map((post) => {
-                return <PostSummary post={post} key={post.id} onVoteUp={this.onVoteUp} onVoteDown={this.onVoteDown} />
+                return <PostSummary post={post} key={post.id} onVoteUp={this.onVoteUp} onVoteDown={this.onVoteDown} openPostModal={this.props.openPostModal}/>
             })}
             <PostModal category={this.props.match.params.category} />
         </div>

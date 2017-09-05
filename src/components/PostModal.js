@@ -35,14 +35,13 @@ class PostModal extends Component {
             title: '',
             body: '',
             category: this.props.category
-
         })
     }
 
     createPost(e) {
         e.preventDefault()
         this.resetState()
-        this.props.addOrEditPost({ post: this.props.post, title: this.state.title, owner: this.state.owner, body: this.state.body, category: this.state.category })
+        this.props.addOrEditPost({ id: this.props.post.id, title: this.state.title, owner: this.state.owner, body: this.state.body, category: this.state.category })
     }
 
     closePostModal() {
@@ -54,7 +53,8 @@ class PostModal extends Component {
         if (this.props.post && this.props.post.id) {
             this.setState({
                 owner: this.props.post.author,
-                body: this.props.post.body
+                body: this.props.post.body,
+                title: this.props.post.title
             })
         } else {
             this.resetState()

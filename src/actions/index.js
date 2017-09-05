@@ -11,6 +11,7 @@ export const CLOSE_COMMENT_MODAL = "CLOSE_COMMENT_MODAL"
 export const OPEN_POST_MODAL = "OPEN_POST_MODAL"
 export const CLOSE_POST_MODAL = "CLOSE_POST_MODAL"
 export const RECEIVE_CREATE_POST = "RECEIVE_CREATE_POST"
+export const RECEIVE_UPDATE_POST = "RECEIVE_UPDATE_POST"
 
 export const receiveCategories = (categories) => {
     return ({
@@ -164,7 +165,10 @@ export const receiveCreatePost = (post) => ({
     type: RECEIVE_CREATE_POST,
     post
 })
-
+export const receiveUpdatePost = (post) => ({
+    type: RECEIVE_UPDATE_POST,
+    post
+})
 export const createComment = (comment) => {
     let postId = comment.post.id
     return dispatch => (
@@ -221,8 +225,8 @@ export const updatePost = (post) => {
             .updatePost(post)
             .then((response) => response.json())
             .then((responseJson) => {
-                // dispatch(fetchPost(postId))
-                dispatch(closeCommentModal())
+                dispatch(receiveUpdatePost(responseJson))
+                dispatch(closePostModal())
             })
             .catch((error) => {
                 console.error(error);

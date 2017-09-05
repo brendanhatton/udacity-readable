@@ -11,7 +11,8 @@ import {
     CLOSE_COMMENT_MODAL,
     OPEN_POST_MODAL,
     CLOSE_POST_MODAL,
-    RECEIVE_CREATE_POST
+    RECEIVE_CREATE_POST,
+    RECEIVE_UPDATE_POST
 } from '../actions'
 
 function categories(state = [], action) {
@@ -31,6 +32,10 @@ function posts(state = [], action) {
             let updatedPosts = state.slice()
             updatedPosts.push(action.post)
             return updatedPosts
+        case RECEIVE_UPDATE_POST:
+            let updatedSinglePost = state.slice().filter((p) => p.id !== action.post.id)
+            updatedSinglePost.push(action.post)
+            return updatedSinglePost
         case RECEIVE_CATEGORY:
             return action.posts
         case VOTE:
@@ -111,7 +116,7 @@ function commentModalOpen(state = { open: false }, action) {
 function postModalOpen(state = { open: false }, action) {
     switch (action.type) {
         case OPEN_POST_MODAL:
-            return { open: true, comment: action.post }
+            return { open: true, post: action.post }
         case CLOSE_POST_MODAL:
             return { open: false }
         default:
