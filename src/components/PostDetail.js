@@ -5,6 +5,7 @@ import { fetchPost, openCommentModal, openPostModal, deleteComment } from '../ac
 import CommentDetail from './CommentDetail'
 import CommentModal from './CommentModal'
 import PostModal from './PostModal'
+import SortPicker from './SortPicker'
 import { sortByVote } from '../utils/sort_orders'
 
 class PostDetail extends Component {
@@ -33,9 +34,10 @@ class PostDetail extends Component {
                 <Vote voteable={post} voteableType='posts' />
             </p>
             <h3>Comments</h3>
+            <SortPicker />
             <button onClick={this.props.openCommentModal}>Add Comment</button>
             <div className="comments">
-                {this.props.comments && this.props.comments.sort(sortByVote).map((comment) => {
+                {this.props.comments && this.props.comments.map((comment) => {
                     return <CommentDetail key={comment.id} comment={comment} openCommentModal={this.props.openCommentModal} deleteComment={this.props.deleteComment} />
                 })}
 
@@ -50,8 +52,8 @@ class PostDetail extends Component {
 
 const mapStateToProps = (state, props) => ({
     post: state.selectedPost,
-    comments: state.selectedPost.comments ? state.selectedPost.comments.filter((c) => !c.deleted).sort(sortByVote) : []
-});
+    comments: state.selectedPost.comments ? state.selectedPost.comments.filter((c) => !c.deleted).sort(state.sortOrder) : []
+})
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -59,7 +61,7 @@ const mapDispatchToProps = (dispatch) => {
         openCommentModal: (comment) => dispatch(openCommentModal(comment)),
         openPostModal: (post) => dispatch(openPostModal(post)),
         deleteComment: (comment) => dispatch(deleteComment(comment))
-    };
-};
+    }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetail)

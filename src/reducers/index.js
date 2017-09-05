@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import * as SortOrders from '../utils/sort_orders'
 
 import {
     RECEIVE_CATEGORIES,
@@ -12,7 +13,8 @@ import {
     OPEN_POST_MODAL,
     CLOSE_POST_MODAL,
     RECEIVE_CREATE_POST,
-    RECEIVE_UPDATE_POST
+    RECEIVE_UPDATE_POST,
+    CHANGE_SORT_ORDER
 } from '../actions'
 
 function categories(state = [], action) {
@@ -133,10 +135,27 @@ function postModalOpen(state = { open: false }, action) {
     }
 }
 
+function sortOrder(state = SortOrders.sortByVote, action) {
+    switch (action.type) {
+        case CHANGE_SORT_ORDER:
+            switch (action.order) {
+                case 'date':
+                    return SortOrders.sortByDate
+                case 'votes':
+                    return SortOrders.sortByVote
+                default:
+                    return SortOrders.sortByVote
+            }
+        default:
+            return state
+    }
+}
+
 export default combineReducers({
     categories,
     posts,
     selectedPost,
     commentModalOpen,
-    postModalOpen
+    postModalOpen,
+    sortOrder
 })

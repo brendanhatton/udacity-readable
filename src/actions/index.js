@@ -12,6 +12,7 @@ export const OPEN_POST_MODAL = "OPEN_POST_MODAL"
 export const CLOSE_POST_MODAL = "CLOSE_POST_MODAL"
 export const RECEIVE_CREATE_POST = "RECEIVE_CREATE_POST"
 export const RECEIVE_UPDATE_POST = "RECEIVE_UPDATE_POST"
+export const CHANGE_SORT_ORDER = "CHANGE_SORT_ORDER"
 
 export const receiveCategories = (categories) => {
     return ({
@@ -267,3 +268,8 @@ export const deletePost = (post, category) => {
 
     )
 }
+
+export const changeSortOrder = (order) => ({
+    type: CHANGE_SORT_ORDER,
+    order
+})
