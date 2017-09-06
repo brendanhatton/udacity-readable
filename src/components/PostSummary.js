@@ -22,7 +22,7 @@ class PostSummary extends Component {
         const post = this.props.post
         return <div className="post">
             <Link to={{
-                pathname: `/posts/${post.id}`,
+                pathname: `/${post.category}/${post.id}`,
                 state: { fromDashboard: true }
             }}><h2>{post.title}</h2></Link><button onClick={this.deletePost}>delete</button>
 
