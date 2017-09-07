@@ -31,8 +31,8 @@ class PostSummary extends Component {
             </div>
             <p>Author: {post.author} </p>
             <p>
-                <Vote voteable={post} voteableType='posts' />
                 <CommentLink post={post} />
+                <Vote voteable={post} voteableType='posts' />
             </p>
             <hr />
         </div>

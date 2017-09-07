@@ -41,6 +41,19 @@ hr {
 .edit {
   background-image: url("/edit.png");
 }
+.up {
+  background-image: url("/up.png");
+  margin-left: 5px;
+  vertical-align: middle;
+}
+.down {
+  background-image: url("/down.png");
+  margin-left: 5px;
+  vertical-align: middle;
+}
 .post-header h3 {
   display: inline;
+}
+.vote-area {
+  margin-left: 35px;
 }

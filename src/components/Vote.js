@@ -7,8 +7,8 @@ class Vote extends Component {
         const voteable = this.props.voteable
         return <span className="vote-area">
             <span className="voteable-meta">Vote count {voteable.voteScore}
-                <button onClick={(e) => this.onVoteUp(voteable, e)}>up</button>
-                <button onClick={(e) => this.onVoteDown(voteable, e)}>down</button>
+                <button onClick={(e) => this.onVoteUp(voteable, e)} className="icon up" />
+                <button onClick={(e) => this.onVoteDown(voteable, e)} className="icon down" />
             </span>
         </span>
     }
