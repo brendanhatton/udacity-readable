@@ -16,9 +16,6 @@ class App extends Component {
         <Route path='/:category/:id' component={PostDetail} />
         <Route exact path='/:category' component={PostList} />
 
-<div className="footer">
-<a href="https://icons8.com/icon/47856/Up">Up icon credits</a>
-</div>
       </div>
     );
   }

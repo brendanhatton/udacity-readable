@@ -37,9 +37,11 @@ hr {
 }
 .delete {
   background-image: url("/delete.png");
+  vertical-align: bottom;
 }
 .edit {
   background-image: url("/edit.png");
+  vertical-align: bottom;
 }
 .up {
   background-image: url("/up.png");
