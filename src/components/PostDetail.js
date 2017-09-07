@@ -23,26 +23,29 @@ class PostDetail extends Component {
 
     render() {
         const post = this.props.post
-        return <div className="post">
-            <h2 key={post.id}>{post.title}</h2>
-            <p>Category: {post.category}</p>
-            <p>{post.body}</p>
-            <p>Author: {post.author}</p>
-            <button onClick={this.editPost}>edit</button>
-            <p>
-                <Vote voteable={post} voteableType='posts' />
-            </p>
-            <h3>Comments</h3>
-            <SortPicker />
-            <button onClick={this.props.openCommentModal}>Add Comment</button>
-            <div className="comments">
-                {this.props.comments && this.props.comments.map((comment) => {
-                    return <CommentDetail key={comment.id} comment={comment} openCommentModal={this.props.openCommentModal} deleteComment={this.props.deleteComment} />
-                })}
+        return <div className="post-list">
+            <div className="post">
+                <div className="post-header">
+                    <h3 key={post.id}>{post.title}</h3>
 
+                    <button className="icon edit" onClick={this.editPost} />
+                </div>
+                <p>Category: {post.category}</p>
+                <p>{post.body}</p>
+                <p>Author: {post.author} <Vote voteable={post} voteableType='posts' /></p>
+                <hr />
+                <h3>Comments</h3>
+                <SortPicker />
+                <button onClick={this.props.openCommentModal}>Add Comment</button>
+                <div className="comments">
+                    {this.props.comments && this.props.comments.map((comment) => {
+                        return <CommentDetail key={comment.id} comment={comment} openCommentModal={this.props.openCommentModal} deleteComment={this.props.deleteComment} />
+                    })}
+
+                </div>
+                <CommentModal post={post} />
+                <PostModal category={post.category} post={post} />
             </div>
-            <CommentModal post={post} />
-            <PostModal category={post.category} post={post} />
         </div>
     }
 }

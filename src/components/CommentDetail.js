@@ -17,13 +17,14 @@ class CommentDetail extends Component {
     }
     render() {
         const comment = this.props.comment
-        return <div>
+        return <div className="comment">
             <p>{comment.body}</p>
             ({comment.author}, {new Date(comment.timestamp).toLocaleString()})
-            <button onClick={this.editComment}>edit</button>
-            <button onClick={this.deleteComment}>delete</button>
-             <p><Vote voteable={comment} voteableType='comments' /></p>
-             
+            <button className="icon delete" onClick={this.deleteComment} />
+            <button className="icon edit" onClick={this.editComment} />
+
+            <p><Vote voteable={comment} voteableType='comments' /></p>
+
         </div>
 
     }
