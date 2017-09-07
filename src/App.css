@@ -1,5 +1,5 @@
-.App {
-  text-align: center;
+body {
+  background-color: cornsilk;
 }
 .category-list {
   background-color: darkblue;
@@ -10,4 +10,37 @@ a.category-link {
 }
 .category-link.active {
   color: azure;
+}
+.sort-picker {
+  padding-left: 10px;
+}
+.sort-picker select  {
+  margin-left: 10px;
+}
+.post-list {
+  margin-left: 50px;
+}
+hr {
+  margin-right: 50px;
+  border-color: blue;
+}
+.icon {
+  background-size: 25px;
+  width: 25px;
+  height: 25px;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: 15px;
+}
+.delete {
+  background-image: url("/delete.png");
+}
+.edit {
+  background-image: url("/edit.png");
+}
+.post-header h3 {
+  display: inline;
 }

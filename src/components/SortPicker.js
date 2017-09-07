@@ -7,13 +7,13 @@ class SortPicker extends Component {
         this.setState({ value: event.target.value });
     }
     render() {
-        return <div>
-            <p>Sorted by:
+        return <div className="sort-picker">
+            <span>Sorted by:
             <select onChange={this.props.changeSortOrder}>
                     <option value="votes">votes</option>
                     <option value="date">date</option>
                 </select>
-            </p>
+            </span>
         </div>
     }
 }

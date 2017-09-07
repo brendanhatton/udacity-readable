@@ -7,12 +7,14 @@ import SortPicker from './SortPicker'
 
 class PostList extends Component {
     render() {
-        return <div className="postList">
+        return <div>
             {this.props.match.params.category && <button onClick={this.props.openPostModal}>Add Post: {this.props.match.params.category}</button>}
             <SortPicker />
-            {this.props.posts.map((post) => {
-                return <PostSummary post={post} key={post.id} onVoteUp={this.onVoteUp} onVoteDown={this.onVoteDown} openPostModal={this.props.openPostModal} deletePost={this.props.deletePost} category={this.props.match.params.category} />
-            })}
+            <div className="post-list">
+                {this.props.posts.map((post) => {
+                    return <PostSummary post={post} key={post.id} onVoteUp={this.onVoteUp} onVoteDown={this.onVoteDown} openPostModal={this.props.openPostModal} deletePost={this.props.deletePost} category={this.props.match.params.category} />
+                })}
+            </div>
             <PostModal category={this.props.match.params.category} />
         </div>
 

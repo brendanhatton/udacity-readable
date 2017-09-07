@@ -21,17 +21,20 @@ class PostSummary extends Component {
     render() {
         const post = this.props.post
         return <div className="post">
-            <Link to={{
-                pathname: `/${post.category}/${post.id}`,
-                state: { fromDashboard: true }
-            }}><h2>{post.title}</h2></Link><button onClick={this.deletePost}>delete</button>
-
-            <p>Author: {post.author} <button onClick={this.editPost}>edit</button></p>
+            <div className="post-header">
+                <Link to={{
+                    pathname: `/${post.category}/${post.id}`,
+                    state: { fromDashboard: true }
+                }}><h3>{post.title}</h3></Link>
+                <button className="icon delete" onClick={this.deletePost} />
+                <button className="icon edit" onClick={this.editPost} />
+            </div>
+            <p>Author: {post.author} </p>
             <p>
                 <Vote voteable={post} voteableType='posts' />
                 <CommentLink post={post} />
             </p>
-
+            <hr />
         </div>
     }
 }
