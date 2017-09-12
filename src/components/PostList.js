@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PostSummary from './PostSummary'
-import { openPostModal, deletePost } from '../actions/index'
+import * as actions from '../actions/index'
 import PostModal from './PostModal'
 import SortPicker from './SortPicker'
 
@@ -33,12 +33,4 @@ const mapStateToProps = (state, props) => {
     })
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetchData: (dataSource) => dispatch(dataSource),
-        openPostModal: (post) => dispatch(openPostModal(post)),
-        deletePost: (post, categoryPage) => dispatch(deletePost(post))
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostList)
+export default connect(mapStateToProps, actions)(PostList)

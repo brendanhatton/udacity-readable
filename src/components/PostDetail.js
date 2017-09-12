@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import Vote from './Vote'
 import { connect } from 'react-redux'
-import { fetchPost, openCommentModal, openPostModal, deleteComment } from '../actions/index'
+// import { fetchPost, openCommentModal, openPostModal, deleteComment } from '../actions/index'
+import * as actions from '../actions/index'
 import CommentDetail from './CommentDetail'
 import CommentModal from './CommentModal'
 import The404Page from './The404Page'
@@ -15,7 +16,7 @@ class PostDetail extends Component {
     }
 
     componentDidMount = () => {
-        this.props.fetchData(this.props.match.params.id)
+        this.props.fetchPost(this.props.match.params.id)
     }
 
     editPost() {
@@ -63,13 +64,4 @@ const mapStateToProps = (state, props) => ({
     comments: state.selectedPost.comments ? state.selectedPost.comments.filter((c) => !c.deleted).sort(state.sortOrder) : []
 })
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetchData: (id) => dispatch(fetchPost(id)),
-        openCommentModal: (comment) => dispatch(openCommentModal(comment)),
-        openPostModal: (post) => dispatch(openPostModal(post)),
-        deleteComment: (comment) => dispatch(deleteComment(comment))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostDetail)
+export default connect(mapStateToProps, actions)(PostDetail)

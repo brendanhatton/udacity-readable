@@ -1,4 +1,3 @@
-import * as ReadableAPIUtil from '../utils/readable_api_util';
 import { fetchPost, fetchPosts, openPostModal, closePostModal, createPost, deletePost, updatePost } from './posts'
 import { openCommentModal, closeCommentModal, createComment, deleteComment, updateComment, fetchComments } from './comments'
 import { receiveCategory, receiveCategories, fetchCategory, fetchCategories, fetchCategoryPosts } from './categories'
