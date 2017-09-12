@@ -7,29 +7,24 @@ import SortPicker from './SortPicker'
 
 class PostList extends Component {
     render() {
+        const category = this.props.category
         return <div>
-            {this.props.match.params.category && <button onClick={this.props.openPostModal}>Add Post: {this.props.match.params.category}</button>}
+            {category && <button onClick={this.props.openPostModal}>Add Post: {category}</button>}
             <SortPicker />
             <div className="post-list">
                 {this.props.posts.map((post) => {
-                    return <PostSummary post={post} key={post.id} onVoteUp={this.onVoteUp} onVoteDown={this.onVoteDown} openPostModal={this.props.openPostModal} deletePost={this.props.deletePost} category={this.props.match.params.category} />
+                    return <PostSummary post={post} key={post.id} onVoteUp={this.onVoteUp} onVoteDown={this.onVoteDown} openPostModal={this.props.openPostModal} deletePost={this.props.deletePost} category={category} />
                 })}
             </div>
-            <PostModal category={this.props.match.params.category} />
+            <PostModal category={category} />
         </div>
 
     }
 }
 
 const mapStateToProps = (state, props) => {
-    let posts = []
-    if (props.match.params.category) {
-        posts = state.posts.filter((p) => p.category === props.match.params.category)
-    } else {
-        posts = state.posts
-    }
     return ({
-        posts: posts.filter((p) => !p.deleted).sort(state.sortOrder)
+        posts: state.posts.filter((p) => !p.deleted).sort(state.sortOrder)
     })
 }
 

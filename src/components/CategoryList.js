@@ -6,7 +6,6 @@ import { NavLink } from 'react-router-dom'
 class CategoryList extends Component {
     componentDidMount = () => {
         this.props.fetchData()
-        this.props.fetchPosts()
     }
     render() {
         return <div className="category-list">
@@ -27,8 +26,8 @@ const mapDispatchToProps = (dispatch) => {
         fetchData: () => dispatch(fetchCategories()),
         fetchPosts: () => dispatch(fetchPosts()),
         fetchCategoryPosts: (url) => dispatch(fetchCategoryPosts(url))
-    };
-};
+    }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps, null, {
     pure: false
