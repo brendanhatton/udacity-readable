@@ -5,7 +5,7 @@ import { posts } from './posts'
 import { selectedPost } from './posts'
 import { postModalOpen } from './posts'
 import { sortOrder } from './sortOrder'
-import {commentModalOpen} from './comments'
+import { commentModalOpen } from './comments'
 
 export default combineReducers({
     categories,
