@@ -25,7 +25,7 @@ class PostDetail extends Component {
 
     render() {
         const post = this.props.post
-        if (!post || post.length === 0 || post.error) {
+        if (!post || post.length === 0 || post.error || post.deleted || !post.id) {
             return <The404Page />
         } else {
             return <div className="post-list">
