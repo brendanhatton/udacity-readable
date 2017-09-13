@@ -24,7 +24,7 @@ class PostList extends Component {
 
 const mapStateToProps = (state, props) => {
     return ({
-        posts: state.posts.filter((p) => !p.deleted).sort(state.sortOrder)
+        posts: state.posts.sort(state.sortOrder)
     })
 }
 

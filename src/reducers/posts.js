@@ -11,41 +11,49 @@ import {
 } from '../actions'
 
 export const posts = (state = [], action) => {
+    let posts = []
     switch (action.type) {
         case RECEIVE_POSTS:
-            return action.posts
+            posts = action.posts
+            break
         case RECEIVE_CREATE_POST:
             let updatedPosts = state.slice()
             updatedPosts.push(action.post)
-            return updatedPosts
+            posts = updatedPosts
+            break
         case RECEIVE_UPDATE_POST:
             let updatedSinglePost = state.slice().filter((p) => p.id !== action.post.id)
             let originalPost = state.slice().filter((p) => p.id === action.post.id)
             updatedSinglePost.push({
                 ...action.post,
-                comments: originalPost[0].comments
+                comments: originalPost[0].comments.filter((c) => !c.deleted)
             })
-            return updatedSinglePost
+            posts =  updatedSinglePost
+            break
         case RECEIVE_CATEGORY:
-            return action.posts
+            posts = action.posts
+            break
         case VOTE:
-            return state.map(item => {
+            posts =  state.map(item => {
                 return (updatePostOrComment(item, action))
             })
+            break
         case RECEIVE_COMMENTS:
-            return state.map(item => {
+            posts = state.map(item => {
                 if (item.id !== action.post.id) {
                     return item
                 } else {
                     return {
                         ...item,
-                        comments: action.comments
+                        comments: action.comments.filter((c) => !c.deleted)
                     }
                 }
             })
+            break
         default:
-            return state
+            posts = state
     }
+    return posts.filter((p) => !p.deleted)
 }
 
 export const updatePostOrComment = (item, action) => {
@@ -66,7 +74,7 @@ export const updatePostOrComment = (item, action) => {
                 updatedComments.push(newComment)
                 item = {
                     ...item,
-                    comments: updatedComments
+                    comments: updatedComments.filter((c) => !c.deleted)
 
                 }
             }
@@ -83,12 +91,12 @@ export const selectedPost = (state = [], action) => {
         case RECEIVE_COMMENTS:
             return {
                 ...state,
-                comments: action.comments
+                comments: action.comments.filter((c) => !c.deleted)
             }
         case RECEIVE_UPDATE_POST:
             return {
                 ...action.post,
-                comments: state.comments
+                comments: state.comments.filter((c) => !c.deleted)
             }
         case VOTE:
             return updatePostOrComment(state, action)

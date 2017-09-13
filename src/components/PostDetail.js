@@ -61,7 +61,7 @@ class PostDetail extends Component {
 
 const mapStateToProps = (state, props) => ({
     post: state.selectedPost,
-    comments: state.selectedPost.comments ? state.selectedPost.comments.filter((c) => !c.deleted).sort(state.sortOrder) : []
+    comments: state.selectedPost.comments ? state.selectedPost.comments.sort(state.sortOrder) : []
 })
 
 export default connect(mapStateToProps, actions)(PostDetail)
